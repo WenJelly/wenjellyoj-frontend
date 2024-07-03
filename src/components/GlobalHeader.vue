@@ -1,8 +1,5 @@
 <template>
-  <a-row id="globalHeader" style="margin-bottom: 16px" align="center">
-    <a-col flex="100px">
-      <!-- <div>100px</div> -->
-    </a-col>
+  <a-row id="globalHeader" align="center" :wrap="false">
     <a-col flex="auto">
       <a-menu
         mode="horizontal"
@@ -14,34 +11,55 @@
           :style="{ padding: 0, marginRight: '38px' }"
           disabled
         >
-          <div
-            :style="{
-              width: '80px',
-              height: '30px',
-              borderRadius: '2px',
-              background: 'var(--color-fill-3)',
-              cursor: 'text',
-            }"
-          />
+          <!--          <div class="title-bar">-->
+          <!--            <img class="logo" src="../assets/oj-logo.svg" />-->
+          <!--            <div class="title">鱼 OJ</div>-->
+          <!--          </div>-->
+          <div id="logo">WenJellyOJ</div>
         </a-menu-item>
-        <a-menu-item v-for="item in routes" :key="item.path">
+        <a-menu-item v-for="item in visibleRoutes" :key="item.path">
           {{ item.name }}
         </a-menu-item>
       </a-menu>
     </a-col>
-    <a-col flex="100px">
-      <div>{{ store.state.user?.loginUser?.userName ?? "未登录" }}</div>
+    <a-col flex="100px" id="userInfo">
+      <div v-if="store.state.user?.loginUser.userName == '未登录'">
+        <a href="/user/login">未登录</a>
+        <!--        {{ store.state.user?.loginUser?.userName ?? "未登录" }}-->
+      </div>
+      <div v-else>
+        {{ store.state.user?.loginUser.userName }}
+      </div>
     </a-col>
   </a-row>
 </template>
 
 <script setup lang="ts">
-import { useRouter, useRoute } from "vue-router";
 import { routes } from "../router/routes";
-import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { computed, ref } from "vue";
 import { useStore } from "vuex";
+import checkAccess from "@/access/checkAccess";
+import ACCESS_ENUM from "@/access/accessEnum";
 
 const router = useRouter();
+const store = useStore();
+
+// 展示在菜单的路由数组
+const visibleRoutes = computed(() => {
+  return routes.filter((item, index) => {
+    if (item.meta?.hideInMenu) {
+      return false;
+    }
+    // 根据权限过滤菜单
+    if (
+      !checkAccess(store.state.user.loginUser, item?.meta?.access as string)
+    ) {
+      return false;
+    }
+    return true;
+  });
+});
 
 // 默认主页
 const selectedKeys = ref(["/"]);
@@ -51,21 +69,31 @@ router.afterEach((to, from, failure) => {
   selectedKeys.value = [to.path];
 });
 
+console.log();
+
+setTimeout(() => {
+  store.dispatch("user/getLoginUser", {
+    userName: "WenJelly",
+    userRole: ACCESS_ENUM.ADMIN,
+  });
+}, 3000);
+
 const doMenuClick = (key: string) => {
-  console.log(key);
   router.push({
     path: key,
   });
 };
-
-const store = useStore();
-
-// 定时，3秒后更新登录信息
-setTimeout(() => {
-  store.dispatch("user/getLoginUser", {
-    userName: "WenJelly",
-  });
-}, 3000);
 </script>
 
-<style></style>
+<style scoped>
+#logo {
+  font-size: 24px;
+  font-family: 华文琥珀;
+  color: blueviolet;
+  margin-left: 40px;
+}
+
+#userInfo {
+  margin-right: 60px;
+}
+</style>
