@@ -4,52 +4,63 @@
       <a-col :md="12" :xs="24">
         <a-tabs default-active-key="question">
           <a-tab-pane key="question" title="题目">
-            <a-card v-if="question" :title="question.title">
-              <a-descriptions
-                title="判题条件"
-                :column="{ xs: 1, md: 2, lg: 3 }"
-              >
-                <a-descriptions-item label="时间限制">
-                  {{ question.judgeConfig.timeLimit ?? 0 }}
-                </a-descriptions-item>
-                <a-descriptions-item label="内存限制">
-                  {{ question.judgeConfig.memoryLimit ?? 0 }}
-                </a-descriptions-item>
-                <a-descriptions-item label="堆栈限制">
-                  {{ question.judgeConfig.stackLimit ?? 0 }}
-                </a-descriptions-item>
-              </a-descriptions>
-              <MdViewer :value="question.content || ''" />
-              <template #extra>
-                <a-space wrap>
-                  <div v-for="(tag, index) of question.tags" :key="index">
-                    <!--            简单难度为绿色-->
-                    <a-tag size="large" color="green" v-if="tag == '简单'">
-                      {{ tag }}
-                    </a-tag>
-                    <!--            中等难度为黄色-->
-                    <a-tag
-                      size="large"
-                      color="orangered"
-                      v-else-if="tag == '中等'"
-                    >
-                      {{ tag }}
-                    </a-tag>
-                    <!--            困难难度为红色-->
-                    <a-tag size="large" color="red" v-else-if="tag == '困难'">
-                      {{ tag }}
-                    </a-tag>
-                    <!--            题目类型为淡蓝色-->
-                    <a-tag size="large" color="blue" v-else>
-                      {{ tag }}
-                    </a-tag>
-                  </div>
-                </a-space>
-              </template>
-            </a-card>
+            <div style="margin-top: 16px">
+              <a-card v-if="question" :title="question.title">
+                <a-descriptions
+                  title="判题条件"
+                  :column="{ xs: 1, md: 2, lg: 3 }"
+                >
+                  <a-descriptions-item label="时间限制">
+                    {{ question.judgeConfig.timeLimit ?? 0 }}
+                  </a-descriptions-item>
+                  <a-descriptions-item label="内存限制">
+                    {{ question.judgeConfig.memoryLimit ?? 0 }}
+                  </a-descriptions-item>
+                  <a-descriptions-item label="堆栈限制">
+                    {{ question.judgeConfig.stackLimit ?? 0 }}
+                  </a-descriptions-item>
+                </a-descriptions>
+                <MdViewer :value="question.content || ''" />
+                <template #extra>
+                  <a-space wrap>
+                    <div v-for="(tag, index) of question.tags" :key="index">
+                      <!--            简单难度为绿色-->
+                      <a-tag size="large" color="green" v-if="tag == '简单'">
+                        {{ tag }}
+                      </a-tag>
+                      <!--            中等难度为黄色-->
+                      <a-tag
+                        size="large"
+                        color="orangered"
+                        v-else-if="tag == '中等'"
+                      >
+                        {{ tag }}
+                      </a-tag>
+                      <!--            困难难度为红色-->
+                      <a-tag size="large" color="red" v-else-if="tag == '困难'">
+                        {{ tag }}
+                      </a-tag>
+                      <!--            题目类型为淡蓝色-->
+                      <a-tag size="large" color="blue" v-else>
+                        {{ tag }}
+                      </a-tag>
+                    </div>
+                  </a-space>
+                </template>
+              </a-card>
+            </div>
           </a-tab-pane>
-          <!--          <a-tab-pane key="comment" title="评论" disabled> 评论区</a-tab-pane>-->
-          <a-tab-pane key="comment" title="评论"> 评论区</a-tab-pane>
+
+          <a-tab-pane key="comment" title="评论">
+            <div style="margin-top: 16px">
+              <a-list>
+                <a-list-item v-for="idx in 4" :key="idx">
+                  <CommentsView />
+                </a-list-item>
+              </a-list>
+            </div>
+          </a-tab-pane>
+
           <a-tab-pane key="answer" title="答案"> 暂时无法查看答案</a-tab-pane>
         </a-tabs>
       </a-col>
@@ -62,7 +73,7 @@
           >
             <a-select
               v-model="form.language"
-              :style="{ width: '320px' }"
+              :style="{ width: '220px' }"
               placeholder="选择编程语言"
             >
               <a-option>java</a-option>
@@ -96,6 +107,7 @@ import {
   QuestionSubmitAddRequest,
   QuestionVO,
 } from "../../../generated";
+import CommentsView from "@/views/question/CommentsView.vue";
 
 interface Props {
   id: string;

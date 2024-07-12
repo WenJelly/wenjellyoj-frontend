@@ -17,7 +17,7 @@
           <!--          题目的标题-->
           <div id="questionInfo">
             <a-form-item
-              field="title"
+              field="questionTitle"
               label="题目标题"
               style="margin: 0 auto; margin-left: 3%"
             >

@@ -1,7 +1,12 @@
 <template>
   <div id="questionsView">
     <a-form :model="searchParams" layout="inline">
-      <a-form-item field="title" label="题目名称" style="min-width: 240px">
+      <!--      原来的field是title，但是页面会加粗-->
+      <a-form-item
+        field="searchParamsTitle"
+        label="题目名称"
+        style="min-width: 240px"
+      >
         <a-input v-model="searchParams.title" placeholder="请输入题目名称" />
       </a-form-item>
       <a-form-item field="tags" label="标签" style="min-width: 240px">
@@ -56,7 +61,7 @@
           `${
             record.submitNum
               ? ((record.acceptedNum / record.submitNum) * 100).toFixed(2)
-              : "0"
+              : "0.00"
           }% (${record.acceptedNum}/${record.submitNum})`
         }}
       </template>
@@ -123,8 +128,6 @@ onMounted(() => {
   loadData();
 });
 
-// {id: "1", title: "A+ D", content: "新的题目内容", tags: "["二叉树"]", answer: "新的答案", submitNum: 0,…}
-
 const columns = [
   {
     title: "题号",
@@ -155,6 +158,10 @@ const columns = [
   },
 ];
 
+/**
+ * 页面改变时
+ * @param page
+ */
 const onPageChange = (page: number) => {
   searchParams.value = {
     ...searchParams.value,

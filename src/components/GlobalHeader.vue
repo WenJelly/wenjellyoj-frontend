@@ -11,10 +11,6 @@
           :style="{ padding: 0, marginRight: '38px' }"
           disabled
         >
-          <!--          <div class="title-bar">-->
-          <!--            <img class="logo" src="../assets/oj-logo.svg" />-->
-          <!--            <div class="title">鱼 OJ</div>-->
-          <!--          </div>-->
           <div id="logo">WenJellyOJ</div>
         </a-menu-item>
         <a-menu-item v-for="item in visibleRoutes" :key="item.path">
@@ -25,10 +21,16 @@
     <a-col flex="100px" id="userInfo">
       <div v-if="store.state.user?.loginUser.userName == '未登录'">
         <a href="/user/login">未登录</a>
-        <!--        {{ store.state.user?.loginUser?.userName ?? "未登录" }}-->
       </div>
       <div v-else>
-        {{ store.state.user?.loginUser.userName }}
+        <a-dropdown trigger="hover">
+          <a-avatar :image-url="store.state.user?.loginUser.userAvatar">
+          </a-avatar>
+          <template #content>
+            <a-doption @click="personalInfo">个人信息</a-doption>
+            <a-doption @click="logout">退出登录</a-doption>
+          </template>
+        </a-dropdown>
       </div>
     </a-col>
   </a-row>
@@ -41,6 +43,8 @@ import { computed, ref } from "vue";
 import { useStore } from "vuex";
 import checkAccess from "@/access/checkAccess";
 import ACCESS_ENUM from "@/access/accessEnum";
+import { UserControllerService } from "../../generated";
+import message from "@arco-design/web-vue/es/message";
 
 const router = useRouter();
 const store = useStore();
@@ -82,6 +86,42 @@ const doMenuClick = (key: string) => {
   router.push({
     path: key,
   });
+};
+
+/**
+ * 用户点击个人信息时
+ */
+const personalInfo = () => {
+  setTimeout(() => {
+    // 在这里执行需要延迟执行的代码
+    router.push({
+      path: "/user/personalInfo",
+      replace: true,
+    });
+  });
+};
+
+/**
+ * 用户点击退出登录时
+ */
+const logout = async () => {
+  // 向后端发送请求
+  const res = await UserControllerService.userLogoutUsingPost();
+  if (res.code === 0) {
+    // 跳转到首页
+    message.success("退出成功");
+    // 重新加载首页
+    window.location.reload();
+    setTimeout(() => {
+      // 在这里执行需要延迟执行的代码
+      router.push({
+        path: "/",
+        replace: true,
+      });
+    }, 700);
+  } else {
+    message.error("登陆失败，" + res.message);
+  }
 };
 </script>
 
