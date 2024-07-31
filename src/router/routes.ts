@@ -11,8 +11,6 @@ import QuestionSubmitView from "@/views/question/QuestionSubmitView.vue";
 import ViewQuestionView from "@/views/question/ViewQuestionView.vue";
 import DetailQuestionView from "@/views/question/DetailQuestionView.vue";
 import PersonalInfo from "@/views/user/PersonalInfo.vue";
-import Question from "@/views/question/QuestionTest.vue";
-import QuestionTest from "@/views/question/QuestionTest.vue";
 
 export const routes: Array<RouteRecordRaw> = [
   {
@@ -39,11 +37,6 @@ export const routes: Array<RouteRecordRaw> = [
     meta: {
       hideInMenu: true,
     },
-  },
-  {
-    path: "/questionsTest",
-    name: "测试",
-    component: QuestionTest,
   },
   {
     path: "/questions",
