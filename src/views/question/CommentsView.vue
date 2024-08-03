@@ -1,7 +1,7 @@
 <template>
-  <a-comment author="Balzac" datetime="1 hour" align="right">
+  <a-comment align="right" author="Balzac" datetime="1 hour">
     <template #actions>
-      <span class="action" key="heart" @click="onLikeChange">
+      <span key="heart" class="action" @click="onLikeChange">
         <span v-if="like">
           <IconHeartFill :style="{ color: '#f53f3f' }" />
         </span>
@@ -10,7 +10,7 @@
         </span>
         {{ 83 + (like ? 1 : 0) }}
       </span>
-      <span class="action" key="star" @click="onStarChange">
+      <span key="star" class="action" @click="onStarChange">
         <span v-if="star">
           <IconStarFill
             style="
@@ -25,7 +25,7 @@
         </span>
         {{ 3 + (star ? 1 : 0) }}
       </span>
-      <span class="action" key="reply"> <IconMessage /> Reply </span>
+      <span key="reply" class="action"> <IconMessage /> Reply </span>
     </template>
     <template #avatar>
       <a-avatar>

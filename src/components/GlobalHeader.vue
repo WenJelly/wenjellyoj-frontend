@@ -1,9 +1,9 @@
 <template>
-  <a-row id="globalHeader" align="center" :wrap="false">
+  <a-row id="globalHeader" :wrap="false" align="center">
     <a-col flex="auto">
       <a-menu
-        mode="horizontal"
         :selected-keys="selectedKeys"
+        mode="horizontal"
         @menu-item-click="doMenuClick"
       >
         <a-menu-item
@@ -18,7 +18,7 @@
         </a-menu-item>
       </a-menu>
     </a-col>
-    <a-col flex="100px" id="userInfo">
+    <a-col id="userInfo" flex="100px">
       <div v-if="store.state.user?.loginUser.userName == '未登录'">
         <a href="/user/login">未登录</a>
       </div>
@@ -36,7 +36,7 @@
   </a-row>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import { routes } from "../router/routes";
 import { useRouter } from "vue-router";
 import { computed, ref } from "vue";

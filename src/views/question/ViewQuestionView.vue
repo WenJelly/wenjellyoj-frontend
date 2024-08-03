@@ -7,8 +7,8 @@
             <div style="margin-top: 16px">
               <a-card v-if="question" :title="question.title">
                 <a-descriptions
-                  title="判题条件"
                   :column="{ xs: 1, md: 2, lg: 3 }"
+                  title="判题条件"
                 >
                   <a-descriptions-item label="时间限制">
                     {{ question.judgeConfig.timeLimit ?? 0 }}
@@ -25,23 +25,23 @@
                   <a-space wrap>
                     <div v-for="(tag, index) of question.tags" :key="index">
                       <!--            简单难度为绿色-->
-                      <a-tag size="large" color="green" v-if="tag == '简单'">
+                      <a-tag v-if="tag == '简单'" color="green" size="large">
                         {{ tag }}
                       </a-tag>
                       <!--            中等难度为黄色-->
                       <a-tag
-                        size="large"
-                        color="orangered"
                         v-else-if="tag == '中等'"
+                        color="orangered"
+                        size="large"
                       >
                         {{ tag }}
                       </a-tag>
                       <!--            困难难度为红色-->
-                      <a-tag size="large" color="red" v-else-if="tag == '困难'">
+                      <a-tag v-else-if="tag == '困难'" color="red" size="large">
                         {{ tag }}
                       </a-tag>
                       <!--            题目类型为淡蓝色-->
-                      <a-tag size="large" color="blue" v-else>
+                      <a-tag v-else color="blue" size="large">
                         {{ tag }}
                       </a-tag>
                     </div>
@@ -84,12 +84,12 @@
           </a-form-item>
         </a-form>
         <CodeEditor
-          :value="form.code as string"
-          :language="form.language"
           :handle-change="changeCode"
+          :language="form.language"
+          :value="form.code as string"
         />
         <a-divider size="0" />
-        <a-button type="primary" style="min-width: 200px" @click="doSubmit">
+        <a-button style="min-width: 200px" type="primary" @click="doSubmit">
           提交代码
         </a-button>
       </a-col>
@@ -97,7 +97,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import { defineProps, onMounted, ref, withDefaults } from "vue";
 import message from "@arco-design/web-vue/es/message";
 import CodeEditor from "@/components/CodeEditor.vue";

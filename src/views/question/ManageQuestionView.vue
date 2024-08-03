@@ -16,19 +16,19 @@
         <a-space wrap>
           <div v-for="(tag, index) of record.tags" :key="index">
             <!--            简单难度为绿色-->
-            <a-tag size="large" color="green" v-if="tag == '简单'">
+            <a-tag v-if="tag == '简单'" color="green" size="large">
               {{ tag }}
             </a-tag>
             <!--            中等难度为黄色-->
-            <a-tag size="large" color="orangered" v-else-if="tag == '中等'">
+            <a-tag v-else-if="tag == '中等'" color="orangered" size="large">
               {{ tag }}
             </a-tag>
             <!--            困难难度为红色-->
-            <a-tag size="large" color="red" v-else-if="tag == '困难'">
+            <a-tag v-else-if="tag == '困难'" color="red" size="large">
               {{ tag }}
             </a-tag>
             <!--            题目类型为淡蓝色-->
-            <a-tag size="large" color="blue" v-else>
+            <a-tag v-else color="blue" size="large">
               {{ tag }}
             </a-tag>
           </div>
@@ -50,7 +50,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import { onMounted, ref, watchEffect } from "vue";
 import { Question, QuestionControllerService } from "../../../generated/";
 import message from "@arco-design/web-vue/es/message";

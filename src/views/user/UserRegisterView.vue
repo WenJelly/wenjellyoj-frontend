@@ -3,23 +3,23 @@
     <div id="title">注册</div>
     <div id="registerForm">
       <a-form
-        style="max-width: 480px; margin: 0 auto"
-        label-align="left"
-        auto-label-width
         :model="form"
+        auto-label-width
+        label-align="left"
+        style="max-width: 480px; margin: 0 auto"
         @submit="handleSubmit"
       >
-        <a-form-item field="userName" label="用户名" id="item">
+        <a-form-item id="item" field="userName" label="用户名">
           <a-input v-model="form.userName" placeholder="请输入用户名" />
         </a-form-item>
-        <a-form-item field="userAccount" label="账号" id="item">
+        <a-form-item id="item" field="userAccount" label="账号">
           <a-input v-model="form.userAccount" placeholder="请输入账号" />
         </a-form-item>
         <a-form-item
           id="item"
           field="userPassword"
-          tooltip="密码不少于 8 位"
           label="密码"
+          tooltip="密码不少于 8 位"
         >
           <a-input-password
             v-model="form.userPassword"
@@ -29,8 +29,8 @@
         <a-form-item
           id="item"
           field="checkPassword"
-          tooltip="密码不少于 8 位"
           label="再次输入密码"
+          tooltip="密码不少于 8 位"
         >
           <a-input-password
             v-model="form.checkPassword"
@@ -38,7 +38,7 @@
           />
         </a-form-item>
         <a-form-item id="button">
-          <a-button type="primary" html-type="submit" style="width: 120px">
+          <a-button html-type="submit" style="width: 120px" type="primary">
             注册
           </a-button>
           <div id="gotoRegister">
@@ -50,7 +50,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import { reactive } from "vue";
 import {
   UserControllerService,

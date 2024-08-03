@@ -39,8 +39,8 @@
             >
               <div id="questionContent">
                 <MdEditor
-                  :value="form.content"
                   :handle-change="onContentChange"
+                  :value="form.content"
                 />
               </div>
             </a-form-item>
@@ -54,8 +54,8 @@
             >
               <div id="questionContent">
                 <MdEditor
-                  :value="form.answer"
                   :handle-change="onAnswerChange"
+                  :value="form.answer"
                 />
               </div>
             </a-form-item>
@@ -73,8 +73,8 @@
             >
               <a-input-tag
                 v-model="form.tags"
-                placeholder="请输入题目标签"
                 allow-clear
+                placeholder="请输入题目标签"
                 style="max-width: 70%"
               />
             </a-form-item>
@@ -88,9 +88,9 @@
             >
               <a-input-number
                 v-model="form.judgeConfig.timeLimit"
-                placeholder="请输入时间限制"
-                mode="button"
                 min="0"
+                mode="button"
+                placeholder="请输入时间限制"
                 size="large"
                 style="max-width: 70%"
               />
@@ -105,9 +105,9 @@
             >
               <a-input-number
                 v-model="form.judgeConfig.memoryLimit"
-                placeholder="请输入内存限制"
-                mode="button"
                 min="0"
+                mode="button"
+                placeholder="请输入内存限制"
                 size="large"
                 style="max-width: 70%"
               />
@@ -122,9 +122,9 @@
             >
               <a-input-number
                 v-model="form.judgeConfig.stackLimit"
-                placeholder="请输入堆栈限制"
-                mode="button"
                 min="0"
+                mode="button"
+                placeholder="请输入堆栈限制"
                 size="large"
                 style="max-width: 70%"
               />
@@ -134,9 +134,9 @@
           <div id="questionInfo">
             <div v-for="(judgeCaseItem, index) of form.judgeCase" :key="index">
               <a-form-item
+                :key="index"
                 :field="`form.judgeCase[${index}].input`"
                 :label="`输入用例-${index + 1}`"
-                :key="index"
                 style="margin: 0 auto; margin-left: 3%"
               >
                 <a-input
@@ -146,9 +146,9 @@
                 />
               </a-form-item>
               <a-form-item
+                :key="index"
                 :field="`form.judgeCase[${index}].output`"
                 :label="`输出用例-${index + 1}`"
-                :key="index"
                 style="margin: 0 auto; margin-left: 3%; margin-top: 20px"
               >
                 <a-input
@@ -160,17 +160,17 @@
               <a-row class="grid-demo" style="margin-top: 20px">
                 <a-button
                   status="danger"
-                  @click="handleDelete(index)"
                   style="margin-left: 50%"
+                  @click="handleDelete(index)"
                 >
                   删除
                 </a-button>
 
                 <a-button
-                  @click="handleAdd"
-                  type="outline"
                   status="success"
                   style="margin-left: 2%"
+                  type="outline"
+                  @click="handleAdd"
                   >新增测试用例
                 </a-button>
               </a-row>
@@ -178,7 +178,7 @@
           </div>
           <div id="questionInfo">
             <a-form-item style="margin: 0 auto; margin-left: 11%">
-              <a-button type="primary" style="min-width: 40%" @click="doSubmit"
+              <a-button style="min-width: 40%" type="primary" @click="doSubmit"
                 >提交
               </a-button>
             </a-form-item>
@@ -190,7 +190,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import { onMounted, ref } from "vue";
 import { QuestionControllerService } from "../../../generated";
 import message from "@arco-design/web-vue/es/message";
